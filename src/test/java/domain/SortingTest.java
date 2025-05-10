@@ -6,7 +6,6 @@ class SortingTest {
 
     // ------------------------------ ELEMENTARY TEST --------------------------------------------------------
 
-
     @Test
     void elementaryTest() {
 
@@ -36,7 +35,8 @@ class SortingTest {
     private String elementarySorting(String algorithm, int[] array, int n) {
 
         String result = "";
-        result += "Algorithm: " + algorithm + " - Test\n";
+        result += algorithm + " - Test\n";
+        result += "Algorithm: " + algorithm + "\n";
         result += "Original Array: ";
 
         //En caso de que el array sea menor a n
@@ -47,7 +47,7 @@ class SortingTest {
 
         } else {
             //Imprime el arreglo original
-            for (int i = 0; i <= n; i++)
+            for (int i = 0; i < n; i++)
                 result += array[i] + ", ";
 
         }//end if
@@ -64,7 +64,7 @@ class SortingTest {
 
         } else {
             //Imprime el arreglo ordenado
-            for (int i = 0; i <= n; i++)
+            for (int i = 0; i < n; i++)
                 result += array[i] + ", ";
 
         }//end if
@@ -120,10 +120,11 @@ class SortingTest {
 
     private String complexSorting(String algorithm, int[] array, int n) {
         String result = "";
-        result += "Algorithm: " + algorithm + " - Test\n";
+        result += algorithm + " - Test\n";
+        result += "Algorithm: " + algorithm + "\n";
         result += "Original Array: ";
 
-        // Mostrar el arreglo original
+        // Mostrar el arreglo original (solo los primeros n elementos)
         int elementsToShow = Math.min(n, array.length);
         for (int i = 0; i < elementsToShow; i++) {
             result += array[i] + ", ";
@@ -145,52 +146,74 @@ class SortingTest {
             complex.shellSort(array);
         }
 
-        // Mostrar el arreglo ordenado
+        // Mostrar el arreglo ordenado (solo los primeros n elementos)
         for (int i = 0; i < elementsToShow; i++) {
             result += array[i] + ", ";
         }
 
-        // Mostrar información adicional
+        // Mostrar información adicional específica para cada algoritmo
         if (algorithm.equals("quickSort")) {
+            // Mostrar solo los primeros 30 valores de low, high y pivot
             result += "\nLow: ";
-            for (int value : complex.getLowValues()) {
-                result += value + " ";
+            int[] lowValues = complex.getLowValues();
+            int maxLowToShow = Math.min(30, lowValues.length);
+            for (int i = 0; i < maxLowToShow; i++) {
+                result += lowValues[i] + " ";
             }
 
             result += "\nHigh: ";
-            for (int value : complex.getHighValues()) {
-                result += value + " ";
+            int[] highValues = complex.getHighValues();
+            int maxHighToShow = Math.min(30, highValues.length);
+            for (int i = 0; i < maxHighToShow; i++) {
+                result += highValues[i] + " ";
             }
 
             result += "\nPivot: ";
-            for (int value : complex.getPivotValues()) {
-                result += value + " ";
+            int[] pivotValues = complex.getPivotValues();
+            int maxPivotToShow = Math.min(30, pivotValues.length);
+            for (int i = 0; i < maxPivotToShow; i++) {
+                result += pivotValues[i] + " ";
             }
 
             result += "\nRecursive calls: " + util.Utility.format(complex.getRecursiveCalls());
         } else if (algorithm.equals("radixSort")) {
             result += "\nCounter Array: ";
             int[] counter = complex.getCounterRadix();
-            for (int i = 0; i < counter.length; i++) {
-                result += counter[i] + ", ";
+            if (counter != null) {
+                for (int i = 0; i < counter.length; i++) {
+                    result += counter[i] + ", ";
+                }
             }
         } else if (algorithm.equals("mergeSort")) {
+            // Mostrar solo los primeros 30 valores de low y high
             result += "\nLow: ";
-            for (int value : complex.getLowValues()) {
-                result += value + " ";
+            int[] lowValues = complex.getLowValues();
+            int maxLowToShow = Math.min(30, lowValues.length);
+            for (int i = 0; i < maxLowToShow; i++) {
+                result += lowValues[i] + " ";
             }
 
             result += "\nHigh: ";
-            for (int value : complex.getHighValues()) {
-                result += value + " ";
+            int[] highValues = complex.getHighValues();
+            int maxHighToShow = Math.min(30, highValues.length);
+            for (int i = 0; i < maxHighToShow; i++) {
+                result += highValues[i] + " ";
             }
 
             result += "\nRecursive calls: " + util.Utility.format(complex.getRecursiveCalls());
         } else if (algorithm.equals("shellSort")) {
+            // Mostrar los valores de gap (k=n/2)
+            result += "\nGap (n/2): ";
+            int[] gapValues = complex.getGapValues();
+            for (int i = 0; i < complex.getGapCount(); i++) {
+                result += gapValues[i] + " ";
+            }
+
+            // Mostrar los subarreglos para cada gap
             int[][] subArrays = complex.getGapSubArrays();
-            for (int i = 0; i < subArrays.length; i++) {
-                result += "\nGap (n/2) subArray" + (i+1) + ": ";
-                for (int j = 0; j < subArrays[i].length; j++) {
+            for (int i = 0; i < 3 && i < subArrays.length; i++) {
+                result += "\nGap subarray " + (i+1) + ": ";
+                for (int j = 0; j < subArrays[i].length && subArrays[i][j] != 0; j++) {
                     result += subArrays[i][j] + " ";
                 }
             }
@@ -199,4 +222,4 @@ class SortingTest {
         return result;
     }
 
-}//END ELEMENTARY TEST CLASS
+}//END SORTING TEST CLASS

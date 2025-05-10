@@ -389,7 +389,6 @@ public class Utility {
     }//end getIntegerArray
 
     public static void sortElementaryArrays(String algorithm, int[] array) {
-
         Complex complex = new Complex();
 
         switch (algorithm) {
@@ -410,11 +409,10 @@ public class Utility {
                 break;
 
             case "quickSort":
-                // complex.quickSort(array);
+                complex.quickSort(array, 0, array.length - 1);
                 break;
         }//End switch
-
-    }//end sortElementaryArrays()
+    }
 
     public static int[] copyArray(int[] a, int lenght){
         int[] result = new int[lenght];
